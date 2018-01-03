@@ -1,0 +1,22 @@
+---
+title: "more_infos_on_isrc"
+output: html_document
+---
+
+```{r}
+isrc_subset <- as.data.frame(song_extra_info$isrc, stringsAsFactors = FALSE)
+isrc_subset <- as.data.frame(table(isrc_subset), stringsAsFactors = FALSE)
+isrc_subset <- isrc_subset[order(-isrc_subset$Freq),]
+```
+==> 64902 observations of song_extra_info are not linked to an isrc
+
+```{r}
+songs_isrc_less <- songs[-which(songs$song_id %in% song_extra_info$song_id), ]
+songs_isrc_yes <- songs[which(songs$song_id %in% song_extra_info$song_id), ]
+```
+==> Half of the songs are not referrenced in song_extra_info
+
+```{r}
+length(which(test$song_id %in% songs_isrc_less$song_id))
+```
+==> 1350932 (48%) songs in test are not referenced with an isrc
